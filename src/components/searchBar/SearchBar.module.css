@@ -1,0 +1,48 @@
+.filterForm {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid rgba(55, 55, 55, 0.3);
+  border-radius: 5px;
+  /* flex-grow: 1; */
+  width: 70%;
+}
+
+.inputIcon {
+  margin: 0 10px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  border-style: none;
+  min-width: 500px;
+}
+
+input::placeholder {
+  font-size: 1.3rem;
+
+  font-family: 'Space Mono', monospace;
+}
+
+@media only screen and (max-width: 768px) {
+  .inputContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .input[type='text'] {
+    margin-bottom: 10px;
+  }
+
+  .input {
+    min-width: auto;
+  }
+}
