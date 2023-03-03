@@ -1,4 +1,5 @@
 import styles from './Podcast.module.css';
+import { Link } from 'react-router-dom';
 
 export default function Podcast({ podcast }) {
   return (
@@ -10,8 +11,13 @@ export default function Podcast({ podcast }) {
           alt={podcast.title.label}
         />
       </div>
-      <h2 className={styles.title}>{podcast.title.label.toUpperCase()}</h2>
-      <p className={styles.author}>{podcast['im:artist'].label}</p>
+
+      {/* <Link to={`/podcast/${podcast.id}`}> */}
+      <Link to={`/podcast/${podcast.id.attributes['im:id']}`}>
+        <h2 className={styles.title}>{podcast.title.label.toUpperCase()}</h2>
+      </Link>
+
+      <p className={styles.author}>Author: {podcast['im:artist'].label}</p>
     </div>
   );
 }
