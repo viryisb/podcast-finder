@@ -11,8 +11,6 @@ export default function Podcast({ podcast }) {
           alt={podcast.title.label}
         />
       </div>
-
-      {/* <Link to={`/podcast/${podcast.id}`}> */}
       <Link to={`/podcast/${podcast.id.attributes['im:id']}`}>
         <h2 className={styles.title}>{podcast.title.label.toUpperCase()}</h2>
       </Link>
