@@ -14,19 +14,30 @@ export default function PodcastDetailContainer() {
   useEffect(() => {
     async function fetchData() {
       try {
+        const storedData = localStorage.getItem(`podcast_${id}`);
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          const now = new Date().getTime();
+          if (now - parsedData.timestamp < 86400000) {
+            setPodcastData(parsedData.data);
+            setEpisodes(parsedData.episodes);
+            return;
+          }
+        }
+
         const response = await fetch(API_URL);
         const text = await response.text();
         const json = JSON.parse(text);
         const data = json.results;
 
         if (data.length > 0) {
-          setPodcastData({
+          const podcastData = {
             title: data[0].collectionName,
             author: data[0].artistName,
             image: data[0].artworkUrl600,
             episodeCount: data[0].trackCount,
             description: data[0].feedUrl,
-          });
+          };
 
           const episodeData = data.slice(1).map((episode) => ({
             title: episode.trackName,
@@ -34,7 +45,15 @@ export default function PodcastDetailContainer() {
             duration: formatDuration(episode.trackTimeMillis),
           }));
 
+          setPodcastData(podcastData);
           setEpisodes(episodeData);
+
+          const storedData = {
+            timestamp: new Date().getTime(),
+            data: podcastData,
+            episodes: episodeData,
+          };
+          localStorage.setItem(`podcast_${id}`, JSON.stringify(storedData));
         }
       } catch (error) {
         console.error(error);
