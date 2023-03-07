@@ -1,6 +1,6 @@
 import styles from './SearchBar.module.css';
 
-export default function SearchBar() {
+export default function SearchBar({ onSearchInputChange }) {
   return (
     <div className={styles.filterForm}>
       <form
@@ -21,6 +21,7 @@ export default function SearchBar() {
           name='search-input'
           placeholder='Filter podcast'
           className={styles.input}
+          onChange={onSearchInputChange}
         />
       </form>
     </div>
