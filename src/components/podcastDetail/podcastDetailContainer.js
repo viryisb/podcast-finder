@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { formatDate, formatDuration } from '../../utils';
 import PodcastDetailView from './PodcastDetailView';
-import { LoadingContext } from '../context/LoadingContext';
+import { LoadingContext } from '../../context/LoadingContext';
 
 export default function PodcastDetailContainer() {
   const { id } = useParams();

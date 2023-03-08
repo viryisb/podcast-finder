@@ -1,6 +1,6 @@
 import PodcastListView from './PodcastListView';
 import React, { useState, useEffect, useContext } from 'react';
-import { LoadingContext } from '../context/LoadingContext';
+import { LoadingContext } from '../../context/LoadingContext';
 
 const API_URL =
   'https://api.allorigins.win/get?url=https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json';

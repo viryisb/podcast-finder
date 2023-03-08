@@ -2,7 +2,7 @@ import PodcastListContainer from './components/podcastList/PodcastListContainer'
 import PodcastDetailContainer from './components/podcastDetail/podcastDetailContainer';
 import Header from './components/header/Header';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { LoadingProvider } from './components/context/LoadingContext';
+import { LoadingProvider } from './context/LoadingContext';
 
 function App() {
   return (

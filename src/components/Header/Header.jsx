@@ -1,4 +1,4 @@
-import { LoadingContext } from '../context/LoadingContext';
+import { LoadingContext } from '../../context/LoadingContext';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
