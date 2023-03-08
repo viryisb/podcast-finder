@@ -1,0 +1,30 @@
+.podcastEpisodes {
+  margin-left: 2rem;
+  margin-top: 2rem;
+}
+
+.episodeCount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+
+.episodesTable {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+th {
+  border-bottom: 2px solid #ccc;
+  font-weight: bold;
+}

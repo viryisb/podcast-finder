@@ -1,4 +1,6 @@
-import React from 'react';
+import styles from './PodcastDetailView.module.css';
+import PodcastDetailBar from '../podcastDetailBar/PodcastDetailBar';
+import PlaylistTable from '../playlist/PlaylistTable';
 
 export default function PodcastDetailView({
   podcastData,
@@ -8,26 +10,13 @@ export default function PodcastDetailView({
   return (
     <>
       {podcastData ? (
-        <>
-          <h1>{podcastData.title}</h1>
-          <p>Author: {podcastData.author}</p>
-          {podcastDescription && (
-            <div dangerouslySetInnerHTML={{ __html: podcastDescription }} />
-          )}
-
-          <img src={podcastData.image} alt={podcastData.title} />
-
-          <p>Episodes: {podcastData.episodeCount}</p>
-          <ul>
-            {episodes.map((episode) => (
-              <li key={episode.title}>
-                <p>{episode.title}</p>
-                <p>{episode.date}</p>
-                <p>duration: {episode.duration}</p>
-              </li>
-            ))}
-          </ul>
-        </>
+        <div className={styles.podcastDetailContainer}>
+          <PodcastDetailBar
+            podcastData={podcastData}
+            podcastDescription={podcastDescription}
+          />
+          <PlaylistTable podcastData={podcastData} episodes={episodes} />
+        </div>
       ) : (
         <p>Loading...</p>
       )}
