@@ -80,11 +80,10 @@ export default function PodcastDetailContainer() {
         const dom = new window.DOMParser().parseFromString(text, 'text/xml');
         const description = dom.querySelector('description').textContent;
         setPodcastDescription(description);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
-
-      setIsLoading(false);
     };
 
     if (podcastData) {

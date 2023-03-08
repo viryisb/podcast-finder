@@ -6,7 +6,6 @@ import Spinner from '../spinner/Spinner';
 
 export default function Header() {
   const { isLoading } = useContext(LoadingContext);
-  const { isSpinnerLoading } = useContext(LoadingContext);
 
   return (
     <header className={styles.header}>

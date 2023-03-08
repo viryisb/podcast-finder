@@ -1,4 +1,4 @@
-import Podcast from '../podcast/Podcast';
+import Podcast from '../Podcast/Podcast';
 import SearchBar from '../searchBar/SearchBar';
 
 import styles from './PodcastListView.module.css';

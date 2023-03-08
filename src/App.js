@@ -1,6 +1,6 @@
-import PodcastListContainer from './components/podcastList/PodcastListContainer';
+import PodcastListContainer from './components/PodcastList/PodcastListContainer';
 import PodcastDetailContainer from './components/podcastDetail/podcastDetailContainer';
-import Header from './components/header/Header';
+import Header from './components/Header/Header';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LoadingProvider } from './context/LoadingContext';
 

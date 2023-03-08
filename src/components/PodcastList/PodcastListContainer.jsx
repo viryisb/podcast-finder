@@ -8,7 +8,7 @@ const API_URL =
 export default function PodcastListContainer() {
   const [podcasts, setPodcasts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const { isLoading, setIsLoading } = useContext(LoadingContext);
+  const { setIsLoading } = useContext(LoadingContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,6 +24,7 @@ export default function PodcastListContainer() {
           const data = await response.json();
           const parsedData = JSON.parse(data.contents).feed.entry;
           setPodcasts(parsedData);
+          setIsLoading(false);
 
           const storedData = {
             timestamp: new Date().getTime(),
@@ -34,15 +35,12 @@ export default function PodcastListContainer() {
             'podcasts_expiration',
             new Date(Date.now() + 86400000).toString()
           );
-          setIsLoading(false);
         } catch (error) {
           console.error(error);
-          setIsLoading(false);
         }
       };
       fetchData();
     }
-    setIsLoading(false);
   }, []);
 
   const handleSearchInputChange = (event) => {
