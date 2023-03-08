@@ -8,9 +8,9 @@ const API_URL =
 export default function PodcastListContainer() {
   const [podcasts, setPodcasts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const { isLoading, setIsLoading } = useContext(LoadingContext);
+  const { setIsLoading } = useContext(LoadingContext);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     setIsLoading(true);
 
     const storedData = localStorage.getItem('podcasts');
@@ -42,6 +42,23 @@ export default function PodcastListContainer() {
       };
       fetchData();
     }
+    setIsLoading(false);
+  }, []); */
+
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${API_URL}`);
+        const data = await response.json();
+
+        setPodcasts(JSON.parse(data.contents).feed.entry);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
     setIsLoading(false);
   }, []);
 
