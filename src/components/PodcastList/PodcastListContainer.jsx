@@ -1,5 +1,6 @@
 import PodcastListView from './PodcastListView';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { LoadingContext } from '../context/LoadingContext';
 
 const API_URL =
   'https://api.allorigins.win/get?url=https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json';
@@ -7,8 +8,11 @@ const API_URL =
 export default function PodcastListContainer() {
   const [podcasts, setPodcasts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
 
   useEffect(() => {
+    setIsLoading(true);
+
     const storedData = localStorage.getItem('podcasts');
     const expirationDate = localStorage.getItem('podcasts_expiration');
     if (storedData && expirationDate && new Date(expirationDate) > new Date()) {
@@ -20,17 +24,25 @@ export default function PodcastListContainer() {
           const data = await response.json();
           const parsedData = JSON.parse(data.contents).feed.entry;
           setPodcasts(parsedData);
-          localStorage.setItem('podcasts', JSON.stringify(parsedData));
+
+          const storedData = {
+            timestamp: new Date().getTime(),
+            data: parsedData,
+          };
+          localStorage.setItem('podcasts', JSON.stringify(storedData));
           localStorage.setItem(
             'podcasts_expiration',
             new Date(Date.now() + 86400000).toString()
           );
+          setIsLoading(false);
         } catch (error) {
           console.error(error);
+          setIsLoading(false);
         }
       };
       fetchData();
     }
+    setIsLoading(false);
   }, []);
 
   const handleSearchInputChange = (event) => {
