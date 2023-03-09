@@ -9,7 +9,7 @@ export default function PodcastDetailView({
 }) {
   return (
     <>
-      {podcastData ? (
+      {podcastData && (
         <div className={styles.podcastDetailContainer}>
           <PodcastDetailBar
             podcastData={podcastData}
@@ -17,8 +17,6 @@ export default function PodcastDetailView({
           />
           <PlaylistTable podcastData={podcastData} episodes={episodes} />
         </div>
-      ) : (
-        <p>Loading...</p>
       )}
     </>
   );
