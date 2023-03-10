@@ -111,6 +111,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { formatDate, formatDuration } from '../../utils';
 import PodcastDetailView from './PodcastDetailView';
+
 import { LoadingContext } from '../../context/LoadingContext';
 
 export default function PodcastDetailContainer() {
@@ -143,6 +144,7 @@ export default function PodcastDetailContainer() {
           id: episode.trackId,
           description: episode.description,
           title: episode.trackName,
+          audio: episode.previewUrl,
           date: formatDate(episode.releaseDate),
           duration: formatDuration(episode.trackTimeMillis),
         }));
@@ -175,7 +177,7 @@ export default function PodcastDetailContainer() {
 
   useEffect(() => {
     fetchData();
-  }, [API_URL]);
+  }, []);
 
   useEffect(() => {
     if (podcastData) {
@@ -187,8 +189,8 @@ export default function PodcastDetailContainer() {
     <>
       <PodcastDetailView
         podcastData={podcastData}
-        podcastDescription={podcastDescription}
         episodes={episodes}
+        podcastDescription={podcastDescription}
       />
     </>
   );

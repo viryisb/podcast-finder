@@ -1,7 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 import styles from './PlaylistTable.module.css';
+import { Link, useParams } from 'react-router-dom';
 
-export default function Playlist({ podcastData, episodes }) {
+export default function PlaylistTable({ podcastData, episodes, handleClick }) {
   return (
     <div className={styles.podcastEpisodes}>
       <table className={styles.episodesTable}>
@@ -17,8 +18,16 @@ export default function Playlist({ podcastData, episodes }) {
         </thead>
         <tbody>
           {episodes.map((episode) => (
-            <tr key={episode.title}>
-              <td>{episode.title}</td>
+            <tr key={episode.id}>
+              <td>
+                <button
+                  type='button'
+                  className={styles.episodeLink}
+                  onClick={() => handleClick(episode.id)}
+                >
+                  {episode.title}
+                </button>
+              </td>
               <td>{episode.date}</td>
               <td>{episode.duration}</td>
             </tr>
@@ -27,4 +36,7 @@ export default function Playlist({ podcastData, episodes }) {
       </table>
     </div>
   );
+}
+{
+  /* <Link to={`/podcast/episode/${id}`}>{episode.title}</Link> */
 }

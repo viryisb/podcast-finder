@@ -3,6 +3,7 @@ import PodcastDetailContainer from './components/podcastDetail/podcastDetailCont
 import Header from './components/header/Header';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LoadingProvider } from './context/LoadingContext';
+import EpisodeDetailView from './components/episodeDetail/EpisodeDetailView';
 
 function App() {
   return (
@@ -14,6 +15,10 @@ function App() {
           <Routes>
             <Route path='/' element={<PodcastListContainer />} />
             <Route path='/podcast/:id' element={<PodcastDetailContainer />} />
+            <Route
+              path='/podcast/episodes/:episodeId'
+              element={<PodcastDetailContainer />}
+            />
           </Routes>
         </BrowserRouter>
       </LoadingProvider>
