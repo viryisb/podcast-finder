@@ -28,3 +28,14 @@ th {
   border-bottom: 2px solid #ccc;
   font-weight: bold;
 }
+
+.episodeLink {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+}
