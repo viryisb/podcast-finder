@@ -13,10 +13,10 @@ export default function PodcastDetailView({
   const [selectedEpisodeId, setSelectedEpisodeId] = useState(null);
   const navigate = useNavigate();
 
-  function handleClick(episodeId) {
+  const handleClick = (episodeId) => {
     setSelectedEpisodeId(episodeId);
     navigate(`/podcast/episodes/${episodeId}`);
-  }
+  };
 
   return (
     <>

@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import styles from './PlaylistTable.module.css';
-import { Link, useParams } from 'react-router-dom';
 
 export default function PlaylistTable({ podcastData, episodes, handleClick }) {
   return (
@@ -36,7 +34,4 @@ export default function PlaylistTable({ podcastData, episodes, handleClick }) {
       </table>
     </div>
   );
-}
-{
-  /* <Link to={`/podcast/episode/${id}`}>{episode.title}</Link> */
 }
