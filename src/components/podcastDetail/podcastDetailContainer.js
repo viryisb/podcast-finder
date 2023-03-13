@@ -1,4 +1,4 @@
-/* import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { formatDate, formatDuration } from '../../utils';
 import PodcastDetailView from './PodcastDetailView';
@@ -24,7 +24,7 @@ export default function PodcastDetailContainer() {
         if (now - parsedData.timestamp < 86400000) {
           setPodcastData(parsedData.data);
           setEpisodes(parsedData.episodes);
-
+          setIsLoading(false);
           return;
         }
       }
@@ -36,6 +36,7 @@ export default function PodcastDetailContainer() {
 
       if (data.length > 0) {
         const podcastData = {
+          id: data[0].collectionId,
           title: data[0].collectionName,
           author: data[0].artistName,
           image: data[0].artworkUrl600,
@@ -59,6 +60,7 @@ export default function PodcastDetailContainer() {
           data: podcastData,
           episodes: episodeData,
         };
+
         localStorage.setItem(`podcast_${id}`, JSON.stringify(storedData));
       }
     } catch (error) {
@@ -105,16 +107,8 @@ export default function PodcastDetailContainer() {
     </>
   );
 }
- */
 
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import { formatDate, formatDuration } from '../../utils';
-import PodcastDetailView from './PodcastDetailView';
-
-import { LoadingContext } from '../../context/LoadingContext';
-
-export default function PodcastDetailContainer() {
+/* export default function PodcastDetailContainer() {
   const { id } = useParams();
   const [podcastData, setPodcastData] = useState(null);
   const [podcastDescription, setPodcastDescription] = useState('');
@@ -133,6 +127,7 @@ export default function PodcastDetailContainer() {
 
       if (data.length > 0) {
         const podcastData = {
+          id: data[0].collectionId,
           title: data[0].collectionName,
           author: data[0].artistName,
           image: data[0].artworkUrl600,
@@ -195,3 +190,4 @@ export default function PodcastDetailContainer() {
     </>
   );
 }
+ */

@@ -10,56 +10,36 @@ export default function PodcastListContainer() {
   const [searchTerm, setSearchTerm] = useState('');
   const { setIsLoading } = useContext(LoadingContext);
 
-  /*   useEffect(() => {
-    setIsLoading(true);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${API_URL}`);
+      const data = await response.json();
 
-    const storedData = localStorage.getItem('podcasts');
-    const expirationDate = localStorage.getItem('podcasts_expiration');
-    if (storedData && expirationDate && new Date(expirationDate) > new Date()) {
-      setPodcasts(JSON.parse(storedData));
-    } else {
-      const fetchData = async () => {
-        try {
-          const response = await fetch(API_URL);
-          const data = await response.json();
-          const parsedData = JSON.parse(data.contents).feed.entry;
-          setPodcasts(parsedData);
-
-          const storedData = {
-            timestamp: new Date().getTime(),
-            data: parsedData,
-          };
-          localStorage.setItem('podcasts', JSON.stringify(storedData));
-          localStorage.setItem(
-            'podcasts_expiration',
-            new Date(Date.now() + 86400000).toString()
-          );
-          setIsLoading(false);
-        } catch (error) {
-          console.error(error);
-          setIsLoading(false);
+      const podcastEntries = JSON.parse(data.contents).feed.entry;
+      const podcastsWithTimestamp = podcastEntries.map((entry) => {
+        const storedData = localStorage.getItem(
+          `podcast_${entry.id.attributes['im:id']}`
+        );
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          const now = new Date().getTime();
+          if (now - parsedData.timestamp < 86400000) {
+            return { ...entry, storedData: parsedData };
+          }
         }
-      };
-      fetchData();
+        return entry;
+      });
+
+      setPodcasts(podcastsWithTimestamp);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
     }
-    setIsLoading(false);
-  }, []); */
+  };
 
   useEffect(() => {
     setIsLoading(true);
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${API_URL}`);
-        const data = await response.json();
-
-        setPodcasts(JSON.parse(data.contents).feed.entry);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchData();
-    setIsLoading(false);
   }, []);
 
   const handleSearchInputChange = (event) => {
