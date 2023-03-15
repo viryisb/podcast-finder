@@ -8,8 +8,8 @@ export default function PodcastDetailContainer() {
   const { id } = useParams();
   const [podcastData, setPodcastData] = useState(null);
   const [podcastDescription, setPodcastDescription] = useState('');
-  const [episodes, setEpisodes] = useState([]);
-  const { isLoading, setIsLoading } = useContext(LoadingContext);
+  const [episodeData, setEpisodeData] = useState(null);
+  const { setIsLoading } = useContext(LoadingContext);
 
   const API_URL = `https://itunes.apple.com/lookup?id=${id}&media=podcast&entity=podcastEpisode&limit=20`;
 
@@ -23,7 +23,7 @@ export default function PodcastDetailContainer() {
         const now = new Date().getTime();
         if (now - parsedData.timestamp < 86400000) {
           setPodcastData(parsedData.data);
-          setEpisodes(parsedData.episodes);
+          setEpisodeData(parsedData.episodes);
           setIsLoading(false);
           return;
         }
@@ -53,7 +53,7 @@ export default function PodcastDetailContainer() {
         }));
 
         setPodcastData(podcastData);
-        setEpisodes(episodeData);
+        setEpisodeData(episodeData);
 
         const storedData = {
           timestamp: new Date().getTime(),
@@ -84,7 +84,6 @@ export default function PodcastDetailContainer() {
         const dom = new window.DOMParser().parseFromString(text, 'text/xml');
         const description = dom.querySelector('description').textContent;
         setPodcastDescription(description);
-        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -95,99 +94,15 @@ export default function PodcastDetailContainer() {
     if (podcastData) {
       fetchDescription();
     }
-  }, [podcastData]);
+  }, [podcastData, setIsLoading]);
 
   return (
     <>
       <PodcastDetailView
         podcastData={podcastData}
         podcastDescription={podcastDescription}
-        episodes={episodes}
+        episodes={episodeData}
       />
     </>
   );
 }
-
-/* export default function PodcastDetailContainer() {
-  const { id } = useParams();
-  const [podcastData, setPodcastData] = useState(null);
-  const [podcastDescription, setPodcastDescription] = useState('');
-  const [episodes, setEpisodes] = useState([]);
-  const { isLoading, setIsLoading } = useContext(LoadingContext);
-
-  const API_URL = `https://itunes.apple.com/lookup?id=${id}&media=podcast&entity=podcastEpisode&limit=20`;
-
-  const fetchData = async () => {
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(API_URL);
-      const json = await response.json();
-      const data = json.results;
-
-      if (data.length > 0) {
-        const podcastData = {
-          id: data[0].collectionId,
-          title: data[0].collectionName,
-          author: data[0].artistName,
-          image: data[0].artworkUrl600,
-          episodeCount: data[0].trackCount,
-          description: data[0].feedUrl,
-        };
-
-        const episodeData = data.slice(1).map((episode) => ({
-          id: episode.trackId,
-          description: episode.description,
-          title: episode.trackName,
-          audio: episode.previewUrl,
-          date: formatDate(episode.releaseDate),
-          duration: formatDuration(episode.trackTimeMillis),
-        }));
-
-        setPodcastData(podcastData);
-        setEpisodes(episodeData);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-
-    setIsLoading(false);
-  };
-
-  const fetchDescription = async () => {
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(podcastData.description);
-      const text = await response.text();
-      const dom = new window.DOMParser().parseFromString(text, 'text/xml');
-      const description = dom.querySelector('description').textContent;
-      setPodcastDescription(description);
-    } catch (error) {
-      console.error(error);
-    }
-
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (podcastData) {
-      fetchDescription();
-    }
-  }, [podcastData]);
-
-  return (
-    <>
-      <PodcastDetailView
-        podcastData={podcastData}
-        episodes={episodes}
-        podcastDescription={podcastDescription}
-      />
-    </>
-  );
-}
- */
