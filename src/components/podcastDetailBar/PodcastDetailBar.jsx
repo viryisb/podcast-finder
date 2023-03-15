@@ -1,10 +1,21 @@
 import styles from './PodcastDetailBar.module.css';
 
-export default function PodcastDetailBar({ podcastData, podcastDescription }) {
+import { Link } from 'react-router-dom';
+
+export default function PodcastDetailBar({
+  podcastData,
+  podcastDescription,
+  onTitleClick,
+  onImageClick,
+}) {
   return (
     <div className={styles.podcastSidebar}>
-      <img src={podcastData.image} alt={podcastData.title} />
-      <h2>{podcastData.title}</h2>
+      <Link to={`/podcast/${podcastData.id}`} onClick={onImageClick}>
+        <img src={podcastData.image} alt={podcastData.title} />
+      </Link>
+      <Link to={`/podcast/${podcastData.id}`} onClick={onTitleClick}>
+        <h2>{podcastData.title}</h2>
+      </Link>
       <p> By: {podcastData.author}</p>
       {podcastDescription && (
         <>

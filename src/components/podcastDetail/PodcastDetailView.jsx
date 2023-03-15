@@ -18,6 +18,15 @@ export default function PodcastDetailView({
     navigate(`/podcast/episodes/${episodeId}`);
   };
 
+  const handleTitleClick = () => {
+    navigate(`/podcast/${podcastData.id}`);
+    console.log(handleTitleClick, podcastData.id);
+  };
+
+  const handleImageClick = () => {
+    navigate(`/podcast/${podcastData.id}`);
+  };
+
   return (
     <>
       {podcastData && (
@@ -25,6 +34,8 @@ export default function PodcastDetailView({
           <PodcastDetailBar
             podcastData={podcastData}
             podcastDescription={podcastDescription}
+            onTitleClick={handleTitleClick}
+            onImageClick={handleImageClick}
           />
 
           {selectedEpisodeId ? (
