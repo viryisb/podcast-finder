@@ -1,23 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { formatDate, formatDuration } from '../../utils';
-import PodcastDetailView from './PodcastDetailView';
 import { LoadingContext } from '../../context/LoadingContext';
+import EpisodeDetailView from './EpisodeDetailView';
+import PodcastDetailBar from '../podcastDetailBar/PodcastDetailBar';
 
-export default function PodcastDetailContainer() {
-  const { id } = useParams();
+export default function EpisodeDetailContainer() {
+  const { podcastId, episodeId } = useParams();
   const [podcastData, setPodcastData] = useState(null);
   const [podcastDescription, setPodcastDescription] = useState('');
   const [episodeData, setEpisodeData] = useState(null);
   const { setIsLoading } = useContext(LoadingContext);
 
-  const API_URL = `https://itunes.apple.com/lookup?id=${id}&media=podcast&entity=podcastEpisode&limit=20`;
+  const API_URL = `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`;
 
   const fetchData = async () => {
     setIsLoading(true);
 
     try {
-      const storedData = localStorage.getItem(`podcast_${id}`);
+      const storedData = localStorage.getItem(`podcast_${podcastId}`);
       if (storedData) {
         const parsedData = JSON.parse(storedData);
         const now = new Date().getTime();
@@ -61,7 +62,10 @@ export default function PodcastDetailContainer() {
           episodes: episodeData,
         };
 
-        localStorage.setItem(`podcast_${id}`, JSON.stringify(storedData));
+        localStorage.setItem(
+          `podcast_${podcastId}`,
+          JSON.stringify(storedData)
+        );
       }
     } catch (error) {
       console.error(error);
@@ -72,6 +76,7 @@ export default function PodcastDetailContainer() {
 
   useEffect(() => {
     fetchData();
+    console.log('fetchData');
   }, [API_URL]);
 
   useEffect(() => {
@@ -97,12 +102,23 @@ export default function PodcastDetailContainer() {
     }
   }, [podcastData, setIsLoading]);
 
+  if (!podcastData || !episodeData?.length) return null;
+
+  console.log(podcastData);
+
   return (
     <>
-      <PodcastDetailView
+      <PodcastDetailBar
         podcastData={podcastData}
         podcastDescription={podcastDescription}
-        episodes={episodeData}
+        onTitleClick={() => null}
+        onImageClick={() => null}
+      />
+      <EpisodeDetailView
+        podcast={podcastData}
+        episode={episodeData.find(
+          (episode) => episode.id === Number(episodeId)
+        )}
       />
     </>
   );
